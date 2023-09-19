@@ -5,8 +5,8 @@
 
     const max_shift = d3.max(barData, d => Math.abs(d.metric))
 
-    let margin = ({ top: 79, left: 40, right: 40, bottom: 10 })
-	let width = 640;
+    let margin = ({ top: 49, left: 80, right: 80, bottom: 49 })
+	$: width = 640;
     
     let yPadding = 0.2;
     
@@ -22,39 +22,23 @@
     
     const height = Math.ceil((yDomain.size + yPadding) * 25) + margin.top + margin.bottom
 
-    const xRange = [margin.left, width - margin.right];
-    const yRange = [margin.top, height - margin.bottom];
+    $: xRange = [margin.left, width - margin.right];
+    $: yRange = [margin.top, height - margin.bottom];
     
-    const xScale = d3.scaleLinear(xDomain, xRange)
-    const yScale = d3.scaleBand(yDomain, yRange).padding(yPadding);
+    $: xScale = d3.scaleLinear(xDomain, xRange)
+    $: yScale = d3.scaleBand(yDomain, yRange).padding(yPadding);
         
-    const xTicks = xScale.ticks(width / 80)
-    const yTicks = Array.from(yDomain)
+    $: xTicks = xScale.ticks(width / 80)
+    $: yTicks = Array.from(yDomain)
 
     const colors = ["lightgrey", "lightblue"]
 
-    console.log(barData)
-
-    // <g class='axisY-BarChart'>
-    //             {#each yTicks as name, i}
-    //                 <g class="tick" transform="translate({xScale(0)}, 0)">
-    //                     <text 
-    //                         text-anchor={YX.get(name) > 0 ? "start" : "end"}
-    //                         x={YX.get(name) > 0 ? 6 : -6 }
-    //                         y={yScale(Y[i])}
-    //                         dy="14"
-    //                         font-size=0.7em
-    //                     >{name}</text>
-    //                 </g>
-    //             {/each}
-    //         </g>
+    // console.log(barData)
+    
     import {fade} from "svelte/transition"
 </script>
 
-<div
-  class="chart-container"
-  bind:clientWidth={width}
->
+<div class="chart-container" bind:clientWidth={width}>
     <svg {width} {height}>
         <g class='inner-chart'>
             <g class='axis x' transform="translate(0, {margin.top})">
@@ -80,7 +64,7 @@
                 <rect
                     x={Math.min(xScale(0), xScale(d.metric))}
                     y={yScale(d.type)}
-                    fill={colors[d.type[i] > 0 ? colors.length - 1 : 0]}
+                    fill={d.metric > 0 ? colors[1] : colors[0]}
                     width={Math.abs(xScale(d.metric) - xScale(0))}
                     height={ yScale.bandwidth() }
                 />
@@ -88,6 +72,7 @@
                     x={Math.min(xScale(0), xScale(d.metric))}
                     y={yScale(d.type)}
                     dy="14"
+                    opacity={d.metric == 0 ? 0 : 1}
                     font-size=0.7em
                 >{d.type}</text>
             {/each}

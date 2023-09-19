@@ -19,7 +19,7 @@
 	<g class="xlab" transform="scale(-1,1) translate(-{height}, 0)">
 		<text dy=45 x={height/2}>Rank r</text>
 		<text dy=63 x={height/2}>for</text>
-		<text dy=80 x={height/2}>Boys 1895</text>
+		<text dy=80 x={height/2}>Boys 1930</text>
 		<text dy=60 x={height-40} fill="hsla(212, 10%, 53%, 1)" opacity="0.7">more →</text>
 		<text dy=75 x={height-40} fill="hsla(212, 10%, 53%, 1)" opacity="0.7">frequent</text>
 		<text dy=60 x={40} fill="hsla(212, 10%, 53%, 1)" opacity="0.7">← less</text>
